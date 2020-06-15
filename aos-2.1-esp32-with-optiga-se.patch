@@ -1,7 +1,7 @@
-From 58147d4032d65819823890cf14bdd502eb33563e Mon Sep 17 00:00:00 2001
+From 79c58899ef8ff95b0b6046ee764ba91a4edf9e39 Mon Sep 17 00:00:00 2001
 From: Samir Bhagat <samir.bhagat@infineon.com>
-Date: Mon, 15 Jun 2020 11:05:39 +0530
-Subject: [PATCH] This Commit include the below changes. 1. Added libitls.a
+Date: Mon, 15 Jun 2020 19:04:23 +0530
+Subject: [PATCH] * This Commit include the below changes. 1. Added libitls.a
  library for esp32 platform 2. Added OPTIGA Trust M2 ID2 host code 3. Modified
  the mqttapp to host random data in cloud 4. Added optiga_se_adapter.c file 5.
  Modified i2c driver code to support maximum 20bytes of data.
@@ -112,7 +112,6 @@ Subject: [PATCH] This Commit include the below changes. 1. Added libitls.a
  .../optiga/optiga/util/optiga_util.c          |  672 +++
  3rdparty/experimental/optiga/pal/esp32/pal.c  |   55 +
  .../experimental/optiga/pal/esp32/pal_gpio.c  |   77 +
- .../optiga/pal/esp32/pal_i2c - Copy.c         |  306 ++
  .../experimental/optiga/pal/esp32/pal_i2c.c   |  260 +
  .../optiga/pal/esp32/pal_ifx_i2c_config.c     |   91 +
  .../optiga/pal/esp32/pal_logger.c             |  100 +
@@ -144,7 +143,7 @@ Subject: [PATCH] This Commit include the below changes. 1. Added libitls.a
  security/irot/se/src/core/optiga_se_adapter.c |  702 +++
  security/itls/lib/xtensa/libitls.a            |  Bin 0 -> 111336 bytes
  security/itls/src/mbedtls_alt.c               |   38 +-
- 137 files changed, 33563 insertions(+), 44 deletions(-)
+ 136 files changed, 33257 insertions(+), 44 deletions(-)
  create mode 100644 3rdparty/experimental/optiga/examples/integration/alios/example_optiga_se_adapter.c
  create mode 100644 3rdparty/experimental/optiga/examples/optiga/example_utilities.c
  create mode 100644 3rdparty/experimental/optiga/examples/optiga/include/optiga_example.h
@@ -249,7 +248,6 @@ Subject: [PATCH] This Commit include the below changes. 1. Added libitls.a
  create mode 100644 3rdparty/experimental/optiga/optiga/util/optiga_util.c
  create mode 100644 3rdparty/experimental/optiga/pal/esp32/pal.c
  create mode 100644 3rdparty/experimental/optiga/pal/esp32/pal_gpio.c
- create mode 100644 3rdparty/experimental/optiga/pal/esp32/pal_i2c - Copy.c
  create mode 100644 3rdparty/experimental/optiga/pal/esp32/pal_i2c.c
  create mode 100644 3rdparty/experimental/optiga/pal/esp32/pal_ifx_i2c_config.c
  create mode 100644 3rdparty/experimental/optiga/pal/esp32/pal_logger.c
@@ -32837,321 +32835,9 @@ index 000000000..c371c580f
 +/**
 +* @}
 +*/
-diff --git a/3rdparty/experimental/optiga/pal/esp32/pal_i2c - Copy.c b/3rdparty/experimental/optiga/pal/esp32/pal_i2c - Copy.c
-new file mode 100644
-index 000000000..1b1c17b0c
---- /dev/null
-+++ b/3rdparty/experimental/optiga/pal/esp32/pal_i2c - Copy.c	
-@@ -0,0 +1,306 @@
-+/**
-+INFINEON_OPTIGA_SOURCE_CODE_BOILER_PLATE
-+*
-+* \file pal_i2c.c
-+*
-+* \brief   This file implements the platform abstraction layer(pal) APIs for I2C.
-+*
-+* \ingroup  grPAL
-+*
-+* @{
-+*/
-+
-+
-+#include "optiga/pal/pal_i2c.h"
-+#include "aos/hal/i2c.h"
-+#include "aos/kernel.h"
-+#include "ulog/ulog.h"
-+#include "ulog_api.h"
-+
-+#define PAL_I2C_MASTER_MAX_BITRATE  (400U)
-+/// @cond hidden
-+_STATIC_H volatile uint32_t g_entry_count = 0;
-+_STATIC_H pal_i2c_t * gp_pal_i2c_current_ctx;
-+
-+i2c_dev_t i2c_0 = {
-+    .port                 = 0,
-+    .config.address_width = I2C_HAL_ADDRESS_WIDTH_7BIT,
-+    .config.freq          = I2C_BUS_BIT_RATES_400K,//I2C_BUS_BIT_RATES_400K,
-+    .config.mode          = I2C_MODE_MASTER,
-+    .config.dev_addr      = 0x30 << 1
-+};
-+#if 0
-+void test_i2c(void)
-+{
-+    int i;
-+    uint8_t p_data[] = {0x84};
-+    uint8_t rcv_data[10];
-+    int32_t status;
-+
-+   hal_i2c_init(&i2c_0);
-+    while(1)
-+    {
-+        do
-+        {
-+            for(i=0;i<8000;i++);
-+            //Invoke the low level i2c master driver API to write to the bus
-+            if (0 != hal_i2c_master_send(&i2c_0, 
-+                                        //i2c_0.config.dev_addr, 
-+                                        0x60,
-+                                        p_data, sizeof(p_data), 
-+                                        HAL_WAIT_FOREVER))
-+            {
-+                continue;
-+            }
-+            //Check status flags
-+            if (0 == hal_i2c_get_status(&i2c_0))
-+            {
-+                break;
-+            }
-+        } while (1);
-+        do
-+        {
-+            for(i=0;i<8000;i++);
-+            //Invoke the low level i2c master driver API to write to the bus
-+            if (0 != hal_i2c_master_recv(&i2c_0, 
-+                                        i2c_0.config.dev_addr, 
-+                                        rcv_data, 4, 
-+                                        HAL_WAIT_FOREVER))
-+            {
-+                continue;
-+            }
-+            //Check status flags
-+            if (0 == hal_i2c_get_status(&i2c_0))
-+            {
-+                break;
-+            }
-+        } while (1);
-+
-+        
-+    }   
-+}
-+#endif
-+
-+//lint --e{715} suppress "This is implemented for overall completion of API"
-+_STATIC_H pal_status_t pal_i2c_acquire(const void * p_i2c_context)
-+{
-+    if (0 == g_entry_count)
-+    {
-+        g_entry_count++;
-+        if (1 == g_entry_count)
-+        {
-+            return PAL_STATUS_SUCCESS;
-+        }
-+    }
-+    return PAL_STATUS_FAILURE;
-+}
-+
-+//lint --e{715} suppress "The unused p_i2c_context variable is kept for future enhancements"
-+_STATIC_H void pal_i2c_release(const void * p_i2c_context)
-+{
-+    g_entry_count = 0;
-+}
-+/// @endcond
-+
-+void invoke_upper_layer_callback (const pal_i2c_t * p_pal_i2c_ctx, optiga_lib_status_t event)
-+{
-+    upper_layer_callback_t upper_layer_handler;
-+    //lint --e{611} suppress "void* function pointer is type casted to upper_layer_callback_t type"
-+    upper_layer_handler = (upper_layer_callback_t)p_pal_i2c_ctx->upper_layer_event_handler;
-+
-+    upper_layer_handler(p_pal_i2c_ctx->p_upper_layer_ctx, event);
-+
-+    //Release I2C Bus
-+    pal_i2c_release(p_pal_i2c_ctx->p_upper_layer_ctx);
-+}
-+
-+/// @cond hidden
-+void i2c_master_end_of_transmit_callback(void)
-+{
-+    invoke_upper_layer_callback(gp_pal_i2c_current_ctx, PAL_I2C_EVENT_SUCCESS);
-+}
-+
-+void i2c_master_end_of_receive_callback(void)
-+{
-+    invoke_upper_layer_callback(gp_pal_i2c_current_ctx, PAL_I2C_EVENT_SUCCESS);
-+}
-+
-+void i2c_master_error_detected_callback(void)
-+{
-+    invoke_upper_layer_callback(gp_pal_i2c_current_ctx, PAL_I2C_EVENT_ERROR);
-+}
-+
-+void i2c_master_nack_received_callback(void)
-+{
-+    i2c_master_error_detected_callback();
-+}
-+
-+void i2c_master_arbitration_lost_callback(void)
-+{
-+    i2c_master_error_detected_callback();
-+}
-+/// @endcond
-+
-+pal_status_t pal_i2c_init(const pal_i2c_t * p_i2c_context)
-+{
-+    pal_status_t status = PAL_STATUS_SUCCESS;
-+    if (hal_i2c_init(&i2c_0)) {
-+        status = PAL_STATUS_FAILURE;
-+    }
-+    return status;
-+}
-+
-+pal_status_t pal_i2c_deinit(const pal_i2c_t * p_i2c_context)
-+{    
-+    return PAL_STATUS_SUCCESS;
-+}
-+
-+pal_status_t pal_i2c_write(pal_i2c_t * p_i2c_context, uint8_t * p_data, uint16_t length)
-+{
-+    pal_status_t status = PAL_STATUS_FAILURE;
-+    //Acquire the I2C bus before read/write
-+    if (PAL_STATUS_SUCCESS == pal_i2c_acquire(p_i2c_context))
-+    {
-+        gp_pal_i2c_current_ctx = p_i2c_context;
-+        //Invoke the low level i2c master driver API to write to the bus
-+        if (0 != hal_i2c_master_send(&i2c_0, 
-+                                    i2c_0.config.dev_addr, 
-+                                    p_data, length, 
-+                                    HAL_WAIT_FOREVER))
-+        {
-+            //If I2C Master fails to invoke the write operation, invoke upper layer event handler with error.
-+
-+            //lint --e{611} suppress "void* function pointer is type casted to upper_layer_callback_t type"
-+            ((upper_layer_callback_t)(p_i2c_context->upper_layer_event_handler))
-+                                                       (p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_ERROR);
-+            //Release I2C Bus
-+            pal_i2c_release((void * )p_i2c_context);
-+        }
-+        else
-+        {
-+            //Check status flags
-+            if (0 != hal_i2c_get_status(&i2c_0))
-+            {
-+                ((upper_layer_callback_t)(p_i2c_context->upper_layer_event_handler))
-+                                                        (p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_ERROR);
-+                //Release I2C Bus
-+                pal_i2c_release((void * )p_i2c_context);
-+            }
-+            else
-+            {
-+                i2c_master_end_of_transmit_callback();
-+                status = PAL_STATUS_SUCCESS;
-+            }
-+		}
-+    }
-+    else
-+    {
-+        status = PAL_STATUS_I2C_BUSY;
-+        //lint --e{611} suppress "void* function pointer is type casted to upper_layer_callback_t type"
-+        ((upper_layer_callback_t)(p_i2c_context->upper_layer_event_handler))
-+                                                        (p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_BUSY);
-+    }
-+    return status;
-+}
-+
-+pal_status_t pal_i2c_read(pal_i2c_t * p_i2c_context, uint8_t * p_data, uint16_t length)
-+{
-+    pal_status_t status = PAL_STATUS_FAILURE;
-+    uint32_t i;
-+    //Acquire the I2C bus before read/write
-+    if (PAL_STATUS_SUCCESS == pal_i2c_acquire(p_i2c_context))
-+    {
-+        gp_pal_i2c_current_ctx = p_i2c_context;
-+
-+        //Invoke the low level i2c master driver API to read from the bus
-+        if (0 != hal_i2c_master_recv(&i2c_0, 
-+                                     i2c_0.config.dev_addr, 
-+                                     p_data, 
-+                                     length, 
-+                                     AOS_WAIT_FOREVER))
-+        {
-+            //If I2C Master fails to invoke the read operation, invoke upper layer event handler with error.
-+
-+            //lint --e{611} suppress "void* function pointer is type casted to upper_layer_callback_t type"
-+            ((upper_layer_callback_t)(p_i2c_context->upper_layer_event_handler))
-+                                                       (p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_ERROR);
-+            //Release I2C Bus
-+            pal_i2c_release((void * )p_i2c_context);
-+        }
-+		else
-+        {
-+            //Check status flags
-+            if (0 != hal_i2c_get_status(&i2c_0))
-+            {
-+                ((upper_layer_callback_t)(p_i2c_context->upper_layer_event_handler))
-+                                                        (p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_ERROR);
-+                //Release I2C Bus
-+                pal_i2c_release((void * )p_i2c_context);
-+            }
-+            else
-+            {
-+                if (0xc0 == p_data[8])
-+                {
-+                    while(1)
-+                    {
-+                        LOG("-----p_data = %s -----", p_data);
-+                        for(i=0;i<length;i++)
-+                        {
-+                            LOG("-----p_data[%x] = %x -----", i,p_data[i]);
-+                        }
-+                        
-+                        LOG("-----length = %x -----", length);
-+                    }
-+                }
-+                i2c_master_end_of_receive_callback();
-+                status = PAL_STATUS_SUCCESS;
-+            }
-+        }
-+    }
-+    else
-+    {
-+        status = PAL_STATUS_I2C_BUSY;
-+        //lint --e{611} suppress "void* function pointer is type casted to upper_layer_callback_t type"
-+        ((upper_layer_callback_t)(p_i2c_context->upper_layer_event_handler))
-+                                                        (p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_BUSY);
-+    }
-+    return status;
-+}
-+
-+pal_status_t pal_i2c_set_bitrate(const pal_i2c_t * p_i2c_context, uint16_t bitrate)
-+{
-+    pal_status_t return_status = PAL_STATUS_FAILURE;
-+    optiga_lib_status_t event = PAL_I2C_EVENT_ERROR;
-+    //Acquire the I2C bus before setting the bitrate
-+    if (PAL_STATUS_SUCCESS == pal_i2c_acquire(p_i2c_context))
-+    {    
-+        // If the user provided bitrate is greater than the I2C master hardware maximum supported value,
-+        // set the I2C master to its maximum supported value.
-+        if (bitrate > PAL_I2C_MASTER_MAX_BITRATE)         
-+        {
-+            bitrate = PAL_I2C_MASTER_MAX_BITRATE;
-+        }
-+        return_status = PAL_STATUS_SUCCESS;
-+        event = PAL_I2C_EVENT_SUCCESS;
-+    }
-+    else
-+    {
-+        return_status = PAL_STATUS_I2C_BUSY;
-+        event = PAL_I2C_EVENT_BUSY;
-+    }
-+    if (0 != p_i2c_context->upper_layer_event_handler)
-+    {
-+        //lint --e{611} suppress "void* function pointer is type casted to upper_layer_callback_t type"
-+        ((callback_handler_t)(p_i2c_context->upper_layer_event_handler))(p_i2c_context->p_upper_layer_ctx , event);
-+    }
-+    //Release I2C Bus if its acquired 
-+    if (PAL_STATUS_I2C_BUSY != return_status)
-+    {
-+        pal_i2c_release((void * )p_i2c_context);
-+    }
-+    return return_status;
-+}
-+
-+/**
-+* @}
-+*/
 diff --git a/3rdparty/experimental/optiga/pal/esp32/pal_i2c.c b/3rdparty/experimental/optiga/pal/esp32/pal_i2c.c
 new file mode 100644
-index 000000000..c3870275f
+index 000000000..a9075fbee
 --- /dev/null
 +++ b/3rdparty/experimental/optiga/pal/esp32/pal_i2c.c
 @@ -0,0 +1,260 @@
@@ -33200,7 +32886,7 @@ index 000000000..c3870275f
 +#define PAL_I2C_MASTER_MAX_BITRATE  (400U)
 +/// @cond hidden
 +_STATIC_H volatile uint32_t g_entry_count = 0;
-+_STATIC_H pal_i2c_t * gp_pal_i2c_current_ctx;
++_STATIC_H const pal_i2c_t * gp_pal_i2c_current_ctx;
 +
 +//lint --e{715} suppress "This is implemented for overall completion of API"
 +_STATIC_H pal_status_t pal_i2c_acquire(const void * p_i2c_context)
@@ -34799,7 +34485,7 @@ index 000000000..ca3c7757e
 \ No newline at end of file
 diff --git a/3rdparty/experimental/optiga/projects/esp32_alios/aos.mk b/3rdparty/experimental/optiga/projects/esp32_alios/aos.mk
 new file mode 100644
-index 000000000..9a0c09b3c
+index 000000000..9ef7613dd
 --- /dev/null
 +++ b/3rdparty/experimental/optiga/projects/esp32_alios/aos.mk
 @@ -0,0 +1,48 @@
@@ -34836,8 +34522,8 @@ index 000000000..9a0c09b3c
 +    $(LIBOPTIGA)/optiga/comms/ifx_i2c/ifx_i2c_physical_layer.c \
 +    $(LIBOPTIGA)/optiga/comms/ifx_i2c/ifx_i2c_presentation_layer.c \
 +    $(LIBOPTIGA)/optiga/comms/ifx_i2c/ifx_i2c_transport_layer.c \
-+    $(LIBOPTIGA)/example/optiga/usecases/example_ali_id2_key_update.c \
-+    $(LIBOPTIGA)/example/optiga/usecases/example_ali_id2_rsa_key_update.c \
++    $(LIBOPTIGA)/examples/optiga/usecases/example_ali_id2_key_update.c \
++    $(LIBOPTIGA)/examples/optiga/usecases/example_ali_id2_rsa_key_update.c \
 +    $(LIBOPTIGA)/pal/esp32/pal.c \
 +    $(LIBOPTIGA)/pal/esp32/pal_gpio.c \
 +    $(LIBOPTIGA)/pal/esp32/pal_i2c.c \
