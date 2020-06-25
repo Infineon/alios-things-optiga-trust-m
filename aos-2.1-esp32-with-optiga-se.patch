@@ -1,13 +1,12 @@
-From 79c58899ef8ff95b0b6046ee764ba91a4edf9e39 Mon Sep 17 00:00:00 2001
+From f56142ceb797891c747f341c8499e04f440a6fff Mon Sep 17 00:00:00 2001
 From: Samir Bhagat <samir.bhagat@infineon.com>
-Date: Mon, 15 Jun 2020 19:04:23 +0530
-Subject: [PATCH] * This Commit include the below changes. 1. Added libitls.a
- library for esp32 platform 2. Added OPTIGA Trust M2 ID2 host code 3. Modified
- the mqttapp to host random data in cloud 4. Added optiga_se_adapter.c file 5.
- Modified i2c driver code to support maximum 20bytes of data.
+Date: Thu, 25 Jun 2020 12:05:46 +0530
+Subject: [PATCH] 1. Added libitls.a library for esp32 platform 2. Added OPTIGA
+ Trust M2 ID2 host code 3. Modified the mqttapp to host random data in cloud
+ 4. Added optiga_se_adapter.c file 5. Modified i2c driver code to support
+ maximum 20bytes of data.
 
 ---
- .vscode/tasks.json                            |    3 +-
  .../alios/example_optiga_se_adapter.c         |  268 +
  .../examples/optiga/example_utilities.c       |  120 +
  .../examples/optiga/include/optiga_example.h  |  152 +
@@ -110,8 +109,8 @@ Subject: [PATCH] * This Commit include the below changes. 1. Added libitls.a
  .../optiga/include/optiga/pal/pal_os_memory.h |  162 +
  .../optiga/include/optiga/pal/pal_os_timer.h  |  142 +
  .../optiga/optiga/util/optiga_util.c          |  672 +++
- 3rdparty/experimental/optiga/pal/esp32/pal.c  |   55 +
- .../experimental/optiga/pal/esp32/pal_gpio.c  |   77 +
+ 3rdparty/experimental/optiga/pal/esp32/pal.c  |   57 +
+ .../experimental/optiga/pal/esp32/pal_gpio.c  |   81 +
  .../experimental/optiga/pal/esp32/pal_i2c.c   |  260 +
  .../optiga/pal/esp32/pal_ifx_i2c_config.c     |   91 +
  .../optiga/pal/esp32/pal_logger.c             |  100 +
@@ -124,7 +123,7 @@ Subject: [PATCH] * This Commit include the below changes. 1. Added libitls.a
  .../optiga/pal/pal_crypt_mbedtls.c            |  279 +
  .../optiga/pal/pal_crypt_wolfssl.c            |  230 +
  .../optiga/projects/esp32_alios/Config.in     |    9 +
- .../optiga/projects/esp32_alios/aos.mk        |   48 +
+ .../optiga/projects/esp32_alios/aos.mk        |   49 +
  app/example/mqttapp/app_entry.c               |    2 +-
  app/example/mqttapp/mqtt_example.c            |   22 +-
  board/esp32devkitc/Config.in                  |    8 +
@@ -143,7 +142,7 @@ Subject: [PATCH] * This Commit include the below changes. 1. Added libitls.a
  security/irot/se/src/core/optiga_se_adapter.c |  702 +++
  security/itls/lib/xtensa/libitls.a            |  Bin 0 -> 111336 bytes
  security/itls/src/mbedtls_alt.c               |   38 +-
- 136 files changed, 33257 insertions(+), 44 deletions(-)
+ 135 files changed, 33262 insertions(+), 43 deletions(-)
  create mode 100644 3rdparty/experimental/optiga/examples/integration/alios/example_optiga_se_adapter.c
  create mode 100644 3rdparty/experimental/optiga/examples/optiga/example_utilities.c
  create mode 100644 3rdparty/experimental/optiga/examples/optiga/include/optiga_example.h
@@ -264,20 +263,6 @@ Subject: [PATCH] * This Commit include the below changes. 1. Added libitls.a
  create mode 100644 security/irot/se/src/core/optiga_se_adapter.c
  create mode 100644 security/itls/lib/xtensa/libitls.a
 
-diff --git a/.vscode/tasks.json b/.vscode/tasks.json
-index 035607884..d8de39e3c 100644
---- a/.vscode/tasks.json
-+++ b/.vscode/tasks.json
-@@ -20,7 +20,8 @@
-       "type": "shell",
-       "command": "aos",
-       "args": [
--        "make"
-+        "make",
-+        "helloworld@developerkit"
-       ],
-       "presentation": {
-         "focus": true
 diff --git a/3rdparty/experimental/optiga/examples/integration/alios/example_optiga_se_adapter.c b/3rdparty/experimental/optiga/examples/integration/alios/example_optiga_se_adapter.c
 new file mode 100644
 index 000000000..0d02b1bc8
@@ -29389,7 +29374,7 @@ index 000000000..580527729
 +
 diff --git a/3rdparty/experimental/optiga/optiga/include/optiga/optiga_lib_config.h b/3rdparty/experimental/optiga/optiga/include/optiga/optiga_lib_config.h
 new file mode 100644
-index 000000000..08c6cd8a8
+index 000000000..c64607550
 --- /dev/null
 +++ b/3rdparty/experimental/optiga/optiga/include/optiga/optiga_lib_config.h
 @@ -0,0 +1,142 @@
@@ -29515,7 +29500,7 @@ index 000000000..08c6cd8a8
 +    #define OPTIGA_COMMS_DEFAULT_PROTECTION_LEVEL           OPTIGA_COMMS_NO_PROTECTION
 +
 +  /** @brief Default reset type in optiga_comms_open.             \n
-+     *         Cold Reset - (0) : This is applicable if the host platform has GPIO option for RST and VDD.    \n
++         *         Cold Reset - (0) : This is applicable if the host platform has GPIO option for RST and VDD.    \n
 +     *         Soft Reset - (1) : This is applicable if the host platform doesn't have GPIO options for VDD and RST.  \n
 +     *         Warm Reset - (2) : This is applicable if the host platform doesn't have GPIO option for VDD. \n
 +     *         Any other value will lead to error
@@ -32693,10 +32678,10 @@ index 000000000..beab3bd3b
 +*/
 diff --git a/3rdparty/experimental/optiga/pal/esp32/pal.c b/3rdparty/experimental/optiga/pal/esp32/pal.c
 new file mode 100644
-index 000000000..94b939d03
+index 000000000..b37ffa6f1
 --- /dev/null
 +++ b/3rdparty/experimental/optiga/pal/esp32/pal.c
-@@ -0,0 +1,55 @@
+@@ -0,0 +1,57 @@
 +/**
 +* \copyright
 +* MIT License
@@ -32736,11 +32721,13 @@ index 000000000..94b939d03
 +
 +
 +#include "optiga/pal/pal.h"
-+
++#include "optiga/pal/pal_gpio.h"
 +
 +pal_status_t pal_init(void)
 +{
-+    return PAL_STATUS_SUCCESS;
++    
++    return pal_gpio_init(NULL);
++    //return PAL_STATUS_SUCCESS;
 +}
 +
 +
@@ -32754,10 +32741,10 @@ index 000000000..94b939d03
 +*/
 diff --git a/3rdparty/experimental/optiga/pal/esp32/pal_gpio.c b/3rdparty/experimental/optiga/pal/esp32/pal_gpio.c
 new file mode 100644
-index 000000000..c371c580f
+index 000000000..0fa9ddcc6
 --- /dev/null
 +++ b/3rdparty/experimental/optiga/pal/esp32/pal_gpio.c
-@@ -0,0 +1,77 @@
+@@ -0,0 +1,81 @@
 +/**
 +* \copyright
 +* MIT License
@@ -32797,22 +32784,24 @@ index 000000000..c371c580f
 +
 +#include "optiga/pal/pal_gpio.h"
 +#include <aos/hal/gpio.h>
++//#include "driver/gpio.h"
++#define RESET_PIN   25
++#define VDD_PIN     26
 +
-+#define RESET_PIN   18
 +
 +gpio_dev_t gpio_reset;
-+//gpio_dev_t gpio_vdd;
-+
++gpio_dev_t gpio_vdd;
 +//lint --e{714,715} suppress "This is implemented for overall completion of API"
 +pal_status_t pal_gpio_init(const pal_gpio_t * p_gpio_context)
 +{
-+#if 0
-+    hal_gpio_init(p_gpio_context);
-+#else
++
 +    gpio_reset.port  = RESET_PIN;
 +    gpio_reset.config = OUTPUT_PUSH_PULL;
 +    hal_gpio_init(&gpio_reset);
-+#endif
++    gpio_vdd.port  = VDD_PIN;
++    gpio_vdd.config = OUTPUT_PUSH_PULL;
++    hal_gpio_init(&gpio_vdd);
++
 +    return PAL_STATUS_SUCCESS;
 +}
 +
@@ -32824,12 +32813,14 @@ index 000000000..c371c580f
 +
 +void pal_gpio_set_high(const pal_gpio_t * p_gpio_context)
 +{
-+    hal_gpio_output_high(p_gpio_context->p_gpio_hw);
++    gpio_dev_t *gpio_context = (gpio_dev_t*) p_gpio_context->p_gpio_hw; 
++    hal_gpio_output_high(gpio_context);
 +}
 +
 +void pal_gpio_set_low(const pal_gpio_t * p_gpio_context)
 +{
-+    hal_gpio_output_low(p_gpio_context->p_gpio_hw);
++    gpio_dev_t *gpio_context = (gpio_dev_t*) p_gpio_context->p_gpio_hw;
++    hal_gpio_output_high(gpio_context);
 +}
 +
 +/**
@@ -33103,7 +33094,7 @@ index 000000000..a9075fbee
 +*/
 diff --git a/3rdparty/experimental/optiga/pal/esp32/pal_ifx_i2c_config.c b/3rdparty/experimental/optiga/pal/esp32/pal_ifx_i2c_config.c
 new file mode 100644
-index 000000000..e22548b26
+index 000000000..553099fef
 --- /dev/null
 +++ b/3rdparty/experimental/optiga/pal/esp32/pal_ifx_i2c_config.c
 @@ -0,0 +1,91 @@
@@ -33152,7 +33143,7 @@ index 000000000..e22548b26
 +#include "aos/kernel.h"
 +
 +extern gpio_dev_t gpio_reset;
-+//extern gpio_dev_t gpio_vdd;
++extern gpio_dev_t gpio_vdd;
 +
 +i2c_dev_t i2c_0 = {
 +    .port                 = 0,
@@ -33183,7 +33174,7 @@ index 000000000..e22548b26
 +pal_gpio_t optiga_vdd_0 =
 +{
 +    // Platform specific GPIO context for the pin used to toggle Vdd.
-+	NULL
++	(void*)&gpio_vdd
 +};
 +
 +/**
@@ -34485,10 +34476,10 @@ index 000000000..ca3c7757e
 \ No newline at end of file
 diff --git a/3rdparty/experimental/optiga/projects/esp32_alios/aos.mk b/3rdparty/experimental/optiga/projects/esp32_alios/aos.mk
 new file mode 100644
-index 000000000..9ef7613dd
+index 000000000..3d6234b74
 --- /dev/null
 +++ b/3rdparty/experimental/optiga/projects/esp32_alios/aos.mk
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,49 @@
 +
 +NAME := optiga
 +
@@ -34503,6 +34494,7 @@ index 000000000..9ef7613dd
 +$(NAME)_INCLUDES     += ../../../utility/mbedtls/include
 +$(NAME)_INCLUDES     += $(LIBOPTIGA)/externals/wolfssl
 +$(NAME)_INCLUDES     += $(LIBOPTIGA)/externals/wolfssl/wolfcrypt
++GLOBAL_INCLUDES += $(ESP_INC_PATH)/driver/include
 +#$(NAME)_INCLUDES     += $(LIBOPTIGA)/externals/mbedtls/include/ 
 +
 +ifeq ($(AOS_COMP_OPTIGA), y)
