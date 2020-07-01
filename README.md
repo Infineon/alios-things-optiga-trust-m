@@ -94,10 +94,12 @@ This section explains the basic components required for system setup.
 
 ### System Overview 
 
-   <details>
-	<summary>System Overview</summary>
-	<img src="images/Figure-1-System-overview.png" >
-  </details>
+<details>
+<summary>System Overview</summary>
+<div align="center">
+<img src="images/Figure-1-System-overview.png" >
+</div> 
+</details>
 
 This system consists of the following components:
 1.	ESP32-DevKitC V4
@@ -118,10 +120,12 @@ The hardware required to run OPTIGA™ Trust M2 ID2 setup is described in this s
 
 #### ESP32-DevKitC V4
 
-   <details>
-	<summary>ESP32 DevKitC V4</summary>
-	<img src="images/Figure-2-ESP32-DevKitC-V4.png" >
-  </details>
+<details>
+<summary>ESP32 DevKitC V4</summary>
+<div align="center">
+<img src="images/Figure-2-ESP32-DevKitC-V4.png" >
+</div> 
+</details>
 
 Connector supports I2C, reset pin and power supply interfaces among others. 
 
@@ -140,11 +144,13 @@ For more information about the ESP32 Specification, Architecture and Design/Sche
 ##### ESP32 DevKitC Adapter for Shield2Go
 
 The ESP32 DevKitC adapter is an evaluation board that allows users to easily combine different Shield2Go boards to ESP compliant ecosystem, for fast evaluation of IoT systems. With its solderless connectors, it allows users to easily stack Shield2Go boards instead of soldering it. The adapter design is derived from ESP32-DevKitC V4 evaluation board.
- 
-   <details>
-	<summary>ESP32 DevKitC Adapter for Shield2Go</summary>
-    <img src="images/Figure-3-ESP32-DevKitC-Adapter-for-Shield2Go.png">
-  </details>
+
+<details>
+<summary>ESP32 DevKitC Adapter for Shield2Go</summary>
+<div align="center">
+<img src="images/Figure-3-ESP32-DevKitC-Adapter-for-Shield2Go.png" >
+</div> 
+</details>
 
 ESP32 DevKitC adapter features are as follows:
 
@@ -160,12 +166,12 @@ More information is available at [Infineon website.](https://www.infineon.com/cm
 
 Shield2Go boards are equipped with featured Infineon ICs and provide a standardized form factor and pin layout, allowing a ‘plug and play’ approach for easy prototyping.
 
-![](docs/images/Figure-4-OPTIGA™-Trust-M2-ID2-Shield2Go.png)
-
-   <details>
-	<summary>OPTIGA™ Trust M2 ID2 Shield2Go</summary>
-	<img src="images/Figure-4-OPTIGA™-Trust-M2-ID2-Shield2Go.png" >
-  </details> 
+<details>
+<summary>OPTIGA™ Trust M2 ID2 Shield2Go</summary>
+<div align="center">
+<img src="images/Figure-4-OPTIGA™-Trust-M2-ID2-Shield2Go.png" >
+</div> 
+</details>
 
 
 The OPTIGA™ Trust M2 ID2 Shield2Go is equipped with OPTIGA™ Trust M2 ID2 security chip. It allows users to develop system solutions by combining Shield2Go with My IoT adapter and ESP32.
@@ -226,29 +232,32 @@ A 32-bit or 64-bit PC with Windows 7/10 Operating System with the below requirem
 5.	Download aos-2.1-esp32-with-optiga-se.patch  file from the link (Refer section for the patch contain).
 6. Execute below commands to download AliOS-Things source package  
 
-``` bash
-        git clone https://github.com/alibaba/AliOS-Things.git
-        cd AliOS-Things
-        git checkout rel_2.1.0
-        git pull origin rel_2.1.0
-        git apply <patch file path> /aos-2.1-esp32-with-optiga-se.patch
-```
+  ``` bash
+    git clone https://github.com/alibaba/AliOS-Things.git
+    cd AliOS-Things
+    git checkout rel_2.1.0
+    git pull origin rel_2.1.0
+    git apply <patch file path> /aos-2.1-esp32-with-optiga-se.patch
+  ```
  Note: Ignore below warnings while applying the patch
 
-   <details>
-	<summary>Warning while applying patch</summary>
-	<img src="images/Figure-5-Warning-while-applying-patch.png" >
-  </details>  
+<details>
+<summary>Warning while applying patch</summary>
+<div align="center">
+<img src="images/Figure-5-Warning-while-applying-patch.png" >
+</div> 
+</details>
+  
 
 1. Add project to Visual studio code (e.g. Go to File->edit folder to workspace->select top level directory of AliOS-Things repository).  
 8.	Open new Terminal in visual studio code (go to Terminal ->New Terminal)  
 9.	To upgrade aos-cube, follow the below steps in Visual Studio Code Terminal 
 
-``` bash
-        pip install --upgrade setuptools
-        pip install --upgrade wheel
-        pip install --upgrade aos-cube
-```
+  ``` bash
+    pip install --upgrade setuptools
+    pip install --upgrade wheel
+    pip install --upgrade aos-cube
+  ```
 
 #### Configure and build mqttapp use case for ESP32-DevKitC V4
 
@@ -259,85 +268,98 @@ Note: To use customize Device name and secret please refer this section.
 
 1. Execute below command to configure the mqttapp example
 
-``` bash
-        aos make mqttapp@esp32devkitc -c config  
-```
+  ``` bash
+    aos make mqttapp@esp32devkitc -c config  
+  ```
 
 Note: while execution above step if below error occurs 
-
-   <details>
-	<summary>Error while configuring the setup</summary>
-	<img src="images/Figure-6-Error-while-configuring-the-setup.png" >
-  </details> 
+<details>
+<summary>Error while configuring the setup</summary>
+<div align="center">
+<img src="images/Figure-6-Error-while-configuring-the-setup.png" >
+</div> 
+</details>
 
 Execute below command in the terminal
   
-``` bash
-        git clone https://gitee.com/alios-things/kconfig-frontends-win32.git ./build/kconfig/Win32/
-```
+  ``` bash
+    git clone https://gitee.com/alios-things/kconfig-frontends-win32.git ./build/kconfig/Win32/
+  ```
 
 Repeat from step 1
 
 2.	Open < workspace >\AliOS-Things\build\build_rules\toolchain\ aos_toolchain_xtensa.mk file and check the variable assigned with the below specified value.  
 
-``` bash
-        COMPILER_SPECIFIC_OPTIMIZED_CFLAGS    := -O0
-```
+  ``` bash
+    COMPILER_SPECIFIC_OPTIMIZED_CFLAGS    := -O0
+  ```
 
 3.	Execute below command to enable OPTIGA™  host library and iTLS
 
-``` bash
-        aos make menuconfig
-```
+  ``` bash
+    aos make menuconfig
+  ```
 
 4.	Below options need to be  selected for ID2 
 
-``` bash
-        Security -> Link Security ID2
-        Security  -> Root of trust, SE-KM
-        Security -> Root of trust, OPTIGA
-```
-
-   <details>
-	<summary>Menuconfig option to Security section</summary>
-	<img src="images/Figure-7-Menuconfig-option-to-Security-section.png" >
-  </details> 
-
-   <details>
-	<summary>Menuconfig option to select ID2, SE-KM, OPTIGA</summary>
-	<img src="images/Figure-8-Menuconfig-option-to-select-ID2,-SE-KM,-OPTIGA.png" >
-  </details> 
+  ``` bash
+    Security -> Link Security ID2
+    Security  -> Root of trust, SE-KM
+    Security -> Root of trust, OPTIGA
+  ```
+<details>
+<summary>Menuconfig option to Security section</summary>
+<div align="center">
+<img src="images/Figure-7-Menuconfig-option-to-Security-section.png" >
+</div> 
+</details>
+<details>
+<summary>Menuconfig option to select ID2, SE-KM, OPTIGA</summary>
+<div align="center">
+<img src="images/Figure-8-Menuconfig-option-to-select-ID2,-SE-KM,-OPTIGA.png" >
+</div> 
+</details>
 
 5.	Change below options to change TLS to iTLS 
 
-``` bash
-        Deselect  Middleware -> Linkkit Configuration -> Linkkit HAL Config ->support TLS
-        Select Middleware -> Linkkit Configuration -> Linkkit HAL Config ->support ITLS
-```
-   <details>
-	<summary>Menuconfig option to Middleware</summary>
-	<img src="images/Figure-9-Menuconfig-option-to-Middleware.png" >
-  </details>   
+  ``` bash
+    Deselect  Middleware -> Linkkit Configuration -> Linkkit HAL Config ->support TLS
+    Select Middleware -> Linkkit Configuration -> Linkkit HAL Config ->support ITLS
+  ```
+<details>
+<summary>Menuconfig option to Middleware</summary>
+<div align="center">
+<img src="images/Figure-9-Menuconfig-option-to-Middleware.png" >
+</div> 
+</details>
 
-   <details>
-	<summary>Menuconfig option to Linkkit Configuration</summary>
-	<img src="images/Figure-10-Menuconfig-option-to-Linkkit-Configuration.png" >
-  </details>  
+<details>
+<summary>Menuconfig option to Linkkit Configuration</summary>
+<div align="center">
+<img src="images/Figure-10-Menuconfig-option-to-Linkkit-Configuration.png">
+</div> 
+</details>
+
+<details>
+<summary>Menuconfig option to Linkkit HAL config</summary>
+<div align="center">
+<img src="images/Figure-11-Menuconfig-option-to-Linkkit-HAL-config.png">
+</div> 
+</details>
  
-   <details>
-	<summary>Menuconfig option to Linkkit HAL config</summary>
-	<img src="images/Figure-11-Menuconfig-option-to-Linkkit-HAL-config.png" >
-  </details> 
+<details>
+<summary>Menuconfig option to deselect support TLS</summary>
+<div align="center">
+<img src="images/Figure-12-Menuconfig-option-to-deselect-support-TLS.png">
+</div> 
+</details> 
 
-   <details>
-	<summary>Menuconfig option to deselect support TLS</summary>
-	<img src="images/Figure-12-Menuconfig-option-to-deselect-support-TLS.png" >
-  </details> 
-
-   <details>
-	<summary>Menuconfig option to select support ITLS</summary>
-	<img src="images/Figure-13-Menuconfig-option-to-select-support-ITLS.png" >
-  </details> 
+<details>
+<summary>Menuconfig option to select support ITLS</summary>
+<div align="center">
+<img src="images/Figure-13-Menuconfig-option-to-select-support-ITLS.png">
+</div> 
+</details> 
 
 6.	Save and exit from menuconfig
 
@@ -345,50 +367,54 @@ Repeat from step 1
 
 1.	To build source code execute below command 
 
-``` bash
-        aos make
-```
+  ``` bash
+    aos make
+  ```
 
 #### Steps to download example hex file to ESP32-DevKitC V4
 
 1.	Execute below command to flash the generated HEX file (Check the COM port number from device manager which is connected with your ESP32-DevKitC V4)
 
-``` bash
-        aos upload mqttapp@esp32devkitc
-```
-   <details>
-	<summary>Selecting COM port</summary>
-	<img src="images/Figure-14-Selecting-COM-port.png" >
-  </details>
-
+  ``` bash
+    aos upload mqttapp@esp32devkitc
+  ```
+<details>
+<summary>Selecting COM port</summary>
+<div align="center">
+<img src="images/Figure-14-Selecting-COM-port.png">
+</div> 
+</details>
 
 #### Steps to execute mqttapp
 
 1.	Execute below command to run mqttapp (Check the COM port number from device manager which is connected with your ESP32-DevKitC V4) 
 
-``` bash
-        aos monitor COMn 115200(‘n’ is the port number assigned to ESP32-DevKitC V4)
-```
+  ``` bash
+    aos monitor COMn 115200(‘n’ is the port number assigned to ESP32-DevKitC V4)
+  ```
 
 2.	Press reset button
 3.	To configure Wi-Fi execute below command (after restart press enter in serial port console)
 
-``` bash
-        netmgr connect wifi_name wifi_password
-```
+  ``` bash
+    netmgr connect wifi_name wifi_password
+  ```
 
 4.	Below is the example log of successful cloud connection
 
-   <details>
-	<summary>Successful client server authentication log of mqttapp</summary>
-	<img src="images/Figure-15-Successful-client-server-authentication-log-of-mqttapp.png" >
-  </details>
+<details>
+<summary>Successful client server authentication log of mqttapp</summary>
+<div align="center">
+<img src="images/Figure-15-Successful-client-server-authentication-log-of-mqttapp.png">
+</div> 
+</details>
 
-   <details>
-	<summary>Server side hosted log</summary>
-	<img src="images/Figure-16-Server-side-hosted-log.png" >
-  </details>
-
+<details>
+<summary>Server side hosted log</summary>
+<div align="center">
+<img src="images/Figure-16-Server-side-hosted-log.png">
+</div> 
+</details>
 
 ##	FAQs
 
@@ -414,10 +440,12 @@ AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_se
 
 5. Example output is shown as below
 
-   <details>
-	<summary>Example log of manifest and fragment data for AES key</summary>
-	<img src="images/Figure-17-Example-log-of-manifest-and-fragment-data-for-AES-key.png" >
-  </details>
+<details>
+<summary>Example log of manifest and fragment data for AES key</summary>
+<div align="center">
+<img src="images/Figure-17-Example-log-of-manifest-and-fragment-data-for-AES-key.png">
+</div> 
+</details>
 
 6.	Make the following changes in AliOS-Things\3rdparty\experimental\optiga\example\optiga\usecases\example_ali_id2_key_update.c file
     - Copy "manifest_data[]" and replace it in "manifest_aes_key[]"
@@ -426,9 +454,9 @@ AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_se
   
 7.	Invoke function example_optiga_util_ali_id2_aes_key_update() in the beginning of application_start() present in AliOS-Things\app\example\mqttapp\app_entry.c
 8.	Go back to root folder and build source code using below command   
-``` bash
-        aos make
-```
+  ``` bash
+    aos make
+  ```
 9.	Flash and execute application
 
 #### Update RSA 1024 key in OPTIGA™
@@ -441,10 +469,12 @@ AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_se
 AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\
 5.	Example output is shown as below
 
-   <details>
-	<summary>Example log of manifest and fragment data for RSA key</summary>
-	<img src="images/Figure-18-Example-log-of-manifest-and-fragment-data-for-RSA-key.png" >
-  </details>
+<details>
+<summary>Example log of manifest and fragment data for RSA key</summary>
+<div align="center">
+<img src="images/Figure-18-Example-log-of-manifest-and-fragment-data-for-RSA-key.png">
+</div> 
+</details>
 
 6.	Make the following changes in AliOS-Things\3rdparty\experimental\optiga\example\optiga\usecases\example_ali_id2_rsa_key_update.c file
     - Copy "manifest_data[]" and replace it in "manifest_rsa_key[]"
@@ -452,9 +482,9 @@ AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_se
     - Copy 12 bytes unique device ID(provided by ali ID2 distribution center) and replace it in "rsa_device_id[]" 
 7.	Invoke function example_optiga_util_ali_id2_rsa_key_update() in the beginning of application start() present in AliOS-Things\app\example\mqttapp\app_entry.
 8.	Go back to root folder and build source code using below command
-``` bash
+  ``` bash
     aos make
-```
+  ```
 
 ###	How to change the crypto configuration in AliOS-Things source code
 
@@ -488,24 +518,30 @@ ifeq ($(CONFIG_LS_KM_SE), y)
 
 1.	Open the RSA key data provided by Ali in ASN.1 editor and copy the highlighted section as shown below (from the highlighted section its only contain the key part)
 
-   <details>
-	<summary>Extraction of only key part</summary>
-	<img src="images/Figure-19-Extraction-of-only-key-part.png" >
-  </details>
+<details>
+<summary>Extraction of only key part</summary>
+<div align="center">
+<img src="images/Figure-19-Extraction-of-only-key-part.png">
+</div> 
+</details>
 
 2.	Go to Tools-> Data Converter and paste the copied hexadecimal data as shown below
 
-   <details>
-	<summary>Converting to HEX format</summary>
-	<img src="images/Figure-20-Converting-to-HEX-format.png" >
-  </details>
+<details>
+<summary>Converting to HEX format</summary>
+<div align="center">
+<img src="images/Figure-20-Converting-to-HEX-format.png">
+</div> 
+</details>
 
 3.	Click button "To PEM" to convert hexadecimal data to .pem format
 
-  <details>
-	<summary>Converting HEX to PEM format</summary>
-	<img src="images/Figure-21-Converting-HEX-to-PEM-format.png" >
-  </details>
+<details>
+<summary>Converting HEX to PEM format</summary>
+<div align="center">
+<img src="images/Figure-21-Converting-HEX-to-PEM-format.png">
+</div> 
+</details>
 
 4.	Save the file in AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\payload\key\rsa_1024_key.pem
 
