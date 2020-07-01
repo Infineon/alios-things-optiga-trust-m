@@ -174,7 +174,7 @@ Shield2Go boards are equipped with featured Infineon ICs and provide a standardi
 </details>
 
 
-The OPTIGA™ Trust M2 ID2 Shield2Go is equipped with OPTIGA™ Trust M2 ID2 security chip. It allows users to develop system solutions by combining Shield2Go with My IoT adapter and ESP32.
+The OPTIGA™ Trust M2 ID2 Shield2Go is equipped with OPTIGA™ Trust M2 ID2 security chip. It allows users to develop system solutions by combining Shield2Go with ESP32 DevKitC Adapter for Shield2Go and ESP32.
 
 Note:	 Ensure no voltage supplied to any of the pins exceeds the absolute maximum rating of Vcc + 0.3 V.
 
