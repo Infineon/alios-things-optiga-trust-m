@@ -85,7 +85,7 @@ OPTIGA™ Trust M2 ID2 ESP32-DevKitC V4 is designed to provide all the component
 |---|---|---|
 | 1  | ESP32-DevKitC V4  | Hardware Evaluation board for ESP32 microcontroller.  |
 | 2  | ESP32 DevKitC Adapter for Shield2Go  |ESP32-DevKitC V4 compatible connector to add Shield2Go board on ESP32-DevKitC V4.  |
-| 3  | OPTIGA™ Trust M2 ID2 Security Shield2Go  |Shield2Go board contains OPTIGA™ Trust M2 ID2 chip. It is compatible with Infineon’s My IoT adapter.  |
+| 3  | OPTIGA™ Trust M2 ID2 Security Shield2Go  |Shield2Go board contains OPTIGA™ Trust M2 ID2 chip. It is compatible with Infineon’s ESP32 DevKitC Adapter for Shield2Go.  |
 | 4  | Micro USB to USB cable  |The cable provides DC supply to ESP32-DevKitC V4 and to flash software. |
 
 ##	System Setup
