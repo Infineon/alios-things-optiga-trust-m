@@ -47,10 +47,8 @@ This document describes how to setup the environment to demonstrate mqttapp usin
 	
 | Definition | Source |
 |---|---|
-| [1] ESP32-DevKitC V4_usermanual  | [espressif](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/index.html)
- |
+| [1] ESP32-DevKitC V4_usermanual  | [espressif](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/index.html)|
 | [2] Infineon_I2C_Protocol  | [Infineon](https://github.com/Infineon/optiga-trust-m/blob/master/documents/Infineon_I2C_Protocol_v2.02.pdf)   |
-|   |   |
 
 ### Abbreviations
 
