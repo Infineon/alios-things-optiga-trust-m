@@ -103,7 +103,7 @@ This section explains the basic components required for system setup.
 
 This system consists of the following components:
 1.	ESP32-DevKitC V4
-    - The ESP32-DevKitC V4 is an evaluation board with ESP32 Microcontroller from   espressif. For more information refer document [1].
+    - The ESP32-DevKitC V4 is an evaluation board with ESP32 Microcontroller from   espressif. For more information refer document [[1].](#References)
     - It is used as a reference platform to simulate the Host.
     - It interacts via I2C.
 2.	ESP32 DevKitC Adapter for Shield2Go
@@ -139,7 +139,7 @@ Connector supports I2C, reset pin and power supply interfaces among others.
 | 4  | VCC  | GPIO 26  |
 | 5  | GND  | GND  |
 
-For more information about the ESP32 Specification, Architecture and Design/Schematic, refer document [1]
+For more information about the ESP32 Specification, Architecture and Design/Schematic, refer document [[1]](#References)
 
 ##### ESP32 DevKitC Adapter for Shield2Go
 
@@ -198,7 +198,7 @@ All the software components required on AliOS-Things for ESP32 are explained in 
     - Platform Layer  
         This layer provides the platform specific components and libraries for the supported platforms.
 2.	IFX I2C Protocol  
-        This is an implementation as per document [2].
+        This is an implementation as per document [[2].](#References)
 3.	ESP32 I2C Driver  
         These are low level I2C device driver for I2C communication from ESP32 to OPTIGA™ Trust M2 ID2 Security chip.   
 
