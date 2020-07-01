@@ -41,7 +41,7 @@
 
 ## Introduction
 
-This document describes how to setup the environment to demonstrate mqttapp using AliOS-Things software package with the OPTIGA™ Trust M2 ID2 ESP32-DevKitC V4.
+This document describes how to setup the environment to demonstrate [mqttapp](https://code.aliyun.com/living_platform/ali-smartliving-device-alios-things/blob/1124151bc46d66e90ade507d8327e74c8cc94998/example/mqttapp/README.md) using AliOS-Things software package with the OPTIGA™ Trust M2 ID2 ESP32-DevKitC V4.
 
 ###	References
 	
@@ -229,7 +229,7 @@ A 32-bit or 64-bit PC with Windows 7/10 Operating System with the below requirem
 2.	Follow the steps till (安装 AliOS Studio 插件) as per the git repo version from October 11, 2019.
 3.	Create a folder in < workspace > (here "workspace" is the folder where AliOS-Things repository will be cloned)
 4.	Open command prompt and go to the directory < workspace >
-5.	Download aos-2.1-esp32-with-optiga-se.patch  file from the link (Refer section for the patch contain).
+5.	Download aos-2.1-esp32-with-optiga-se.patch  file from the [link](https://github.com/Infineon/aliosthing-optiga-trust-m2) (Refer [section](#What-Infineon-patch-file-contain) for the patch contain).
 6. Execute below commands to download AliOS-Things source package  
 
   ``` bash
@@ -262,7 +262,7 @@ A 32-bit or 64-bit PC with Windows 7/10 Operating System with the below requirem
 #### Configure and build mqttapp use case for ESP32-DevKitC V4
 
 This section describes how to configure and build mqttapp example in AliOS-Things source code for ESP32.   
-Note: To use customize Device name and secret please refer this section.  
+Note: To use customize Device name and secret please refer this [section.](#How-to-create-and-update-new-ID2-device-node)  
 
 #####	Configuration 
 
@@ -462,7 +462,7 @@ AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_se
 #### Update RSA 1024 key in OPTIGA™
 
 1.	Open AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\payload\key\rsa_1024_test.pem file.
-2.	Copy the RSA key generated from the key provided by Ali ID2 key distribution center in rsa_1024_test.pem file (Refer section How to extract RSA key)
+2.	Copy the RSA key generated from the key provided by Ali ID2 key distribution center in rsa_1024_test.pem file (Refer section [How to extract RSA key](#How-to-extract-RSA-key))
 3.	Open samples\gen_key_update_data_set.bat file and copy the below batch command
 %PATH%\protected_update_data_set.exe payload_version=3 trust_anchor_oid=E0E3 target_oid=E0FC sign_algo=RSA-SSA-PKCS1-V1_5-SHA-256 priv_key=..\samples\integrity\sample_rsa_1024_priv.pem payload_type=key key_algo=65 key_usage=12 key_data=..\samples\payload\key\rsa_1024_test.pem 
 4.	 Execute the gen_key_update_data_set.bat from the below path
@@ -569,7 +569,7 @@ ifeq ($(CONFIG_LS_KM_SE), y)
 
 The host library present in AliOS-Things\3rdparty\experimental\optiga location can be port to different platform supported by the AliOS-Things framework.  
 
-1.	Platform abstraction layer for platform low level drivers like I2C, Timer located in AliOS-Things\3rdparty\experimental\optiga\pal can be modified as described here.
+1.	Platform abstraction layer for platform low level drivers like I2C, Timer located in AliOS-Things\3rdparty\experimental\optiga\pal can be modified as described [here](https://github.com/Infineon/optiga-trust-m/tree/master/pal/NEW_PAL_TEMPLATE).
 2.	User need to use platform specific libitls.a library which should be present in AliOS-Things\security\itls\lib\<platform specific folder>.
 
 ###	What Infineon patch file contain
