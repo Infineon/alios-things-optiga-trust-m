@@ -32911,7 +32911,7 @@ index 000000000..0fa9ddcc6
 +void pal_gpio_set_low(const pal_gpio_t * p_gpio_context)
 +{
 +    gpio_dev_t *gpio_context = (gpio_dev_t*) p_gpio_context->p_gpio_hw;
-+    hal_gpio_output_high(gpio_context);
++    hal_gpio_output_low(gpio_context);
 +}
 +
 +/**
