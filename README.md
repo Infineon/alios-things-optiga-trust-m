@@ -1,3 +1,5 @@
+EN | [中文](./README-zh.md)
+
 # Alibaba cloud IoT with OPTIGA™ Trust M2 ID2
  
   - [Introduction](#introduction)
