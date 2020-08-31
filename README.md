@@ -212,11 +212,10 @@ A 32-bit or 64-bit PC with Windows 7/10 Operating System with the below requirem
 ###	Quick Setup
 
 1.	Setup Visual Studio Code as describe from the link
-2.	Run Visual Studio and add folder to workspace (click "Add workspace folder..." and select an empty folder).
-3.	Create a folder in < workspace > (here "workspace" is the folder where AliOS-Things repository will be cloned)
-4.	Open command prompt and go to the directory < workspace >
-5.	Download aos-2.1-esp32-with-optiga-se.patch  file from the [link](https://github.com/Infineon/aliosthing-optiga-trust-m2) (Refer [section](#What-Infineon-patch-file-contain) for the patch contain).
-6. Execute below commands to download AliOS-Things source package  
+2.	Create a folder in < workspace > (here "workspace" is the folder where AliOS-Things repository will be cloned, for example %USERPROFILE%/Documents)
+3.	Open command prompt and go to the directory < workspace >
+4.	Download aos-2.1-esp32-with-optiga-se.patch  file from the [link](https://github.com/Infineon/aliosthing-optiga-trust-m2) (Refer [section](#What-Infineon-patch-file-contain) for the patch contain).
+5. Execute below commands to download AliOS-Things source package  
 
   ``` bash
     git clone https://github.com/alibaba/AliOS-Things.git
