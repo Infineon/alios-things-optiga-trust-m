@@ -222,7 +222,7 @@ A 32-bit or 64-bit PC with Windows 7/10 Operating System with the below requirem
     cd AliOS-Things
     git checkout rel_2.1.0
     git pull origin rel_2.1.0
-    git apply <patch file path> /aos-2.1-esp32-with-optiga-se.patch
+    git apply aos-2.1-esp32-with-optiga-se.patch
   ```
  Note: Ignore below warnings while applying the patch
 
