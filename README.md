@@ -351,7 +351,7 @@ Repeat from step 1
 
 #####	Build source code
 
-1.	To build source code execute below command 
+1.	To build source code execute below command (make sure you are running python2.7 "python -V")
 
   ``` bash
     aos make
