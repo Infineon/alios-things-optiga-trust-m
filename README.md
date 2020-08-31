@@ -234,7 +234,7 @@ A 32-bit or 64-bit PC with Windows 7/10 Operating System with the below requirem
 </details>
   
 
-1. Add project to Visual studio code (e.g. Go to File->edit folder to workspace->select top level directory of AliOS-Things repository).  
+1. Add project to Visual studio code (e.g. Go to File->add folder to workspace->select top level directory of AliOS-Things repository).  
 8.	Open new Terminal in visual studio code (go to Terminal ->New Terminal)  
 9.	To upgrade aos-cube, follow the below steps in Visual Studio Code Terminal 
 
