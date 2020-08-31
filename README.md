@@ -289,8 +289,9 @@ Repeat from step 1
 
   ``` bash
     Security -> Link Security ID2
-    Security  -> Root of trust, SE-KM
+    Security -> Root of trust, SE-KM
     Security -> Root of trust, OPTIGA
+    Security -> Lightweight TLS Support by ID2
   ```
 <details>
 <summary>Menuconfig option to Security section</summary>
