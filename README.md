@@ -251,7 +251,7 @@ Note: To use customize Device name and secret please refer this [section.](#How-
 
 #####	Configuration 
 
-1. Execute below command to configure the mqttapp example
+1. Execute below command to configure the mqttapp example (make sure you run the terminal in the root of the AliOS-Things repository)
 
   ``` bash
     aos make mqttapp@esp32devkitc -c config  
