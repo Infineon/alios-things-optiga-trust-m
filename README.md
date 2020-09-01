@@ -205,7 +205,7 @@ A 32-bit or 64-bit PC with Windows 7/10 Operating System with the below requirem
 6.	ASN1 editor require to extract OPTIGA™ supported RSA fields from key provided by Ali key distribution center user is free to use any editor which supports ASN format.  
     Link to download ASN1 editor: [Download link](https://en.freedownloadmanager.org/Windows-PC/ASN-1-Editor-FREE.html)  
 
-    Note:	Add C:\Python27 and C:\Python27\Scripts path to environment variable in the beginning of the environment variable list.
+    *Note:	Add C:\Python27 and C:\Python27\Scripts path to environment variable in the beginning of the environment variable list.*
 
 ##	AliOS-Things environment setup Using OPTIGA™ Trust M2 ID2
 
