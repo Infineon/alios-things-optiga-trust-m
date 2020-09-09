@@ -408,6 +408,13 @@ Repeat from step 1
 
 1. Access the website :  https://www.alibabacloud.com/ ,  and push the button of "Free Account".
 
+<details>
+<summary>Ali Free Account</summary>
+<div align="center">
+<img src="images/EN001.jpg">
+</div> 
+</details>
+
 2. Fill in your registration information, and push the "Confirm" button. 
 
 3. Finish the Verification process by your Email or by your Phone.
