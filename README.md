@@ -406,8 +406,29 @@ Repeat from step 1
 
 ###	How to check connectivity in Ali cloud
 
-1.	Login to https://cn.aliyun.com/ using personal credential
-2.	Go to show device log section
+1. Access the website :  https://www.alibabacloud.com/ ,  and push the button of "Free Account".
+
+2. Fill in your registration information, and push the "Confirm" button. 
+
+3. Finish the Verification process by your Email or by your Phone.
+
+4. Now you have an individual account. And please finish the "Basic Information" & "Payment Information" registration.
+
+5. Use this account to login the "IoT Platform", in order to create a new Ali IoT device
+
+6. Select the Tab of "Documentation".
+
+7. Click Quick Start -> Use IoT Platform -> Create products and devices, here is a detail manual to guide you how to create an Ali IoT Device. 
+
+8. Note: Please select the "ID2" in the "Authentication Mode" list. But so far it's not aviable for oversea customers.
+
+9.  When you create product successfully, you can view it in Device Management Panel. Push the "View" button to get the "ProductKey" & "ProductSecret“
+
+10. Replace the "ProductKey" & "ProductSecret" in the .\app.\example\mqttapp\mqtt_example.c, and make a new for "#define DEVICE_NAME", ignore the "DEVICE_SECRET"
+
+11. Compile your project.
+
+12. After download the new image and power on you device, then you will see the device status on the panel of : IoT Platform Console -> Maintenance -> Real-time Monitoring
 
 ###	How to update key in OPTIGA™
 
