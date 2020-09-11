@@ -417,25 +417,95 @@ Repeat from step 1
 
 2. Fill in your registration information, and push the "Confirm" button. 
 
+<details>
+<summary>Register Ali Free Account</summary>
+<div align="center">
+<img src="images/EN002.jpg">
+</div> 
+</details>
+
 3. Finish the Verification process by your Email or by your Phone.
+
+<details>
+<summary>Ali Free Account Verification</summary>
+<div align="center">
+<img src="images/EN003.jpg">
+</div> 
+</details>
 
 4. Now you have an individual account. And please finish the "Basic Information" & "Payment Information" registration.
 
+<details>
+<summary>Ali Free Account</summary>
+<div align="center">
+<img src="images/EN004.jpg">
+</div> 
+</details>
+
 5. Use this account to login the "IoT Platform", in order to create a new Ali IoT device
+
+<details>
+<summary>Login IoT Platform</summary>
+<div align="center">
+<img src="images/EN005.jpg">
+</div> 
+</details>
 
 6. Select the Tab of "Documentation".
 
+<details>
+<summary>Ali IoT Platform Documentation</summary>
+<div align="center">
+<img src="images/EN006.jpg">
+</div> 
+</details>
+
 7. Click Quick Start -> Use IoT Platform -> Create products and devices, here is a detail manual to guide you how to create an Ali IoT Device. 
+
+<details>
+<summary>Create a new Product</summary>
+<div align="center">
+<img src="images/EN007.jpg">
+</div> 
+</details>
 
 8. Note: Please select the "ID2" in the "Authentication Mode" list. But so far it's not aviable for oversea customers.
 
+<details>
+<summary>Select ID2 for Authentication Mode</summary>
+<div align="center">
+<img src="images/EN008.jpg">
+</div> 
+</details>
+
 9.  When you create product successfully, you can view it in Device Management Panel. Push the "View" button to get the "ProductKey" & "ProductSecret“
 
+<details>
+<summary>Get "ProductKey"&"ProductSecret"</summary>
+<div align="center">
+<img src="images/EN009.jpg">
+</div> 
+</details>
+
 10. Replace the "ProductKey" & "ProductSecret" in the .\app.\example\mqttapp\mqtt_example.c, and make a new for "#define DEVICE_NAME", ignore the "DEVICE_SECRET"
+
+<details>
+<summary>Update mqtt_example.c</summary>
+<div align="center">
+<img src="images/EN010.jpg">
+</div> 
+</details>
 
 11. Compile your project.
 
 12. After download the new image and power on you device, then you will see the device status on the panel of : IoT Platform Console -> Maintenance -> Real-time Monitoring
+
+<details>
+<summary>Monitoring your device status</summary>
+<div align="center">
+<img src="images/EN011.jpg">
+</div> 
+</details>
 
 ###	How to update key in OPTIGA™
 
