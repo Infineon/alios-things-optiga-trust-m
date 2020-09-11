@@ -409,7 +409,7 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
 1. 访问阿里云官方链接：https://www.aliyun.com/   ， 点击右上角的“免费注册”按钮
 
 <details>
-<summary>免费注册</summary>
+<summary>免费注册步骤1</summary>
 <div align="center">
 <img src="images/CN001.jpg">
 </div> 
@@ -418,7 +418,7 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
 2. 这里有两种注册方式，一种是基于你的支付宝帐户，一种是基于你的手机号码，请根据页面提示完成用户注册流程
 
 <details>
-<summary>免费注册</summary>
+<summary>免费注册步骤2</summary>
 <div align="center">
 <img src="images/CN002.jpg">
 </div> 
@@ -427,7 +427,7 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
 3. 点击“快速实名认证”
 
 <details>
-<summary>实名认证</summary>
+<summary>实名认证步骤1</summary>
 <div align="center">
 <img src="images/CN003.jpg">
 </div> 
@@ -436,7 +436,7 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
 4. 以个人实名认证为例，完成实名认证流程
 
 <details>
-<summary>实名认证</summary>
+<summary>实名认证步骤2</summary>
 <div align="center">
 <img src="images/CN004.jpg">
 </div> 
