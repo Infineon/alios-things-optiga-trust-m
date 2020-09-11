@@ -408,32 +408,129 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
 
 1. 访问阿里云官方链接：https://www.aliyun.com/   ， 点击右上角的“免费注册”按钮
 
+<details>
+<summary>免费注册</summary>
+<div align="center">
+<img src="images/CN001.jpg">
+</div> 
+</details>
+
 2. 这里有两种注册方式，一种是基于你的支付宝帐户，一种是基于你的手机号码，请根据页面提示完成用户注册流程
+
+<details>
+<summary>免费注册</summary>
+<div align="center">
+<img src="images/CN002.jpg">
+</div> 
+</details>
 
 3. 点击“快速实名认证”
 
+<details>
+<summary>实名认证</summary>
+<div align="center">
+<img src="images/CN003.jpg">
+</div> 
+</details>
+
 4. 以个人实名认证为例，完成实名认证流程
+
+<details>
+<summary>实名认证</summary>
+<div align="center">
+<img src="images/CN004.jpg">
+</div> 
+</details>
+
+<details>
+<summary>填写个人信息</summary>
+<div align="center">
+<img src="images/CN004_1.jpg">
+</div> 
+</details>
 
 5. 以该帐户登录，并访问 产品与服务 -> 物联网IOT -> 物联网平台
 
+<details>
+<summary>登录物联网平台</summary>
+<div align="center">
+<img src="images/CN005.jpg">
+</div> 
+</details>
+
 6. 选择开通“物联网平台”服务
+
+<details>
+<summary>开通物联网平台服务</summary>
+<div align="center">
+<img src="images/CN006.jpg">
+</div> 
+</details>
 
 7. 点击“管理控制台”
 
+<details>
+<summary>进入管理控制平台</summary>
+<div align="center">
+<img src="images/CN007.jpg">
+</div> 
+</details>
+
 8. 在 设备管理 -> 产品 中点击“创建产品”
+
+<details>
+<summary>创建产品</summary>
+<div align="center">
+<img src="images/CN008.jpg">
+</div> 
+</details>
 
 9. 填写产品信息，在“认证方式”项中选择 “ID2”
 
+<details>
+<summary>选取ID2</summary>
+<div align="center">
+<img src="images/CN009.jpg">
+</div> 
+</details>
+
 10. 点击“查看产品详情”
+
+<details>
+<summary>查看产品详情</summary>
+<div align="center">
+<img src="images/CN010.jpg">
+</div> 
+</details>
 
 11. 点击“查看”按钮，并保存“ProductSecret”“ProductKey”
 
+<details>
+<summary>获取“ProductSecret”&“ProductKey”</summary>
+<div align="center">
+<img src="images/CN011.jpg">
+</div> 
+</details>
+
 12. 在AliOS开发包中的 .\app.\example\mqttapp\mqtt_example.c替换"ProductKey" & "ProductSecret" , 自命名"DEVICE_NAME", 忽略"DEVICE_SECRET"
+
+<details>
+<summary>更新源文件</summary>
+<div align="center">
+<img src="images/CN012.jpg">
+</div> 
+</details>
 
 13. 重新编译工程
 
 14. 在烧录好新的镜像文件至ESP32评估板之后,你可以在: 物联网平台 -> 监控运维-> 实时监控 页面上查看设备的工作状态
 
+<details>
+<summary>查看设备工作状态</summary>
+<div align="center">
+<img src="images/CN014.jpg">
+</div> 
+</details>
 
 ###	如何更新OPTIGA™的密钥？
 
