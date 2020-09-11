@@ -528,7 +528,7 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
 <details>
 <summary>查看设备工作状态</summary>
 <div align="center">
-<img src="images/CN014.jpg">
+<img src="images/CN14.jpg">
 </div> 
 </details>
 
