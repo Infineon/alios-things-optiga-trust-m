@@ -5,9 +5,9 @@
   - [引言](#引言)
     - [参考文件](#参考)
     - [缩略词](#缩略词)
-  - [OPTIGA™ Trust M2 ID2](#OPTIGA™ Trust M2 ID2)
-    - [OPTIGA™ Trust M2 ID2 与 ESP32-DevKitC V4](#OPTIGA™ Trust M2 ID2 和 ESP32-DevKitC V4)
-    - [评估套件的组成部分](#Evaluation-Kit-Components)
+  - [OPTIGA™ Trust M2 ID2] (#OPTIGA™ Trust M2 ID2)
+    - [OPTIGA™ Trust M2 ID2 与 ESP32-DevKitC V4]  (#OPTIGA™ Trust M2 ID2 和 ESP32-DevKitC V4)
+    - [评估套件的组成部分](#评估套件的组成部分)
   - [系统设置](#System-Setup)
     - [系统概况](#System-Overview)
     - [硬件设置](#Hardware-Setup)
@@ -65,7 +65,7 @@ OPTIGA™ Trust M2 ID2是一个安全解决方案，它采用了预编程安全�
 
 OPTIGA™ Trust M2 ID2 ESP32-DevKitC V4旨在为构建演示OPTIGA™ Trust M2 ID2功能的环境提供所有必要的组件。
 
-####	评估套件的组成部分
+### 评估套件的组成部分
 
 | 编号	  | 项目  | 说明  |
 |---|---|---|
@@ -74,7 +74,7 @@ OPTIGA™ Trust M2 ID2 ESP32-DevKitC V4旨在为构建演示OPTIGA™ Trust M2 I
 | 3  | OPTIGA™ Trust M2 ID2 Security Shield2Go  |带有OPTIGA™ Trust M2 ID2芯片的Shield2Go板。它与英飞凌 Shield2Go ESP32 DevKitC 适配器兼容。  |
 | 4  | USB线的Micro USB接口  |该连接线可以向ESP32-DevKitC V4和闪存软件提供直流电。|
 
-##	系统设置
+## 系统设置
 
 本部分就系统设置所需的基本组件进行了说明。
 
