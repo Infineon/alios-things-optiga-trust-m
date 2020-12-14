@@ -3,7 +3,7 @@
 # 阿里云IoT与OPTIGA™ Trust M2 ID2
  
   - [引言](#引言)
-    - [参考文件](#References)
+    - [参考文件](#参考)
     - [缩略词](#abbreviations)
   - [OPTIGA™ Trust M2 ID2](#OPTIGA™-Trust-M2-ID2)
     - [OPTIGA™ Trust M2 ID2 与 ESP32-DevKitC V4](#OPTIGA™-Trust-M2-ID2-with-ESP32-DevKitC-V4)
