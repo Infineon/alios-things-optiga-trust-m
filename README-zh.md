@@ -4,9 +4,9 @@
  
   - [引言](#引言)
     - [参考文件](#参考)
-    - [缩略词](#abbreviations)
-  - [OPTIGA™ Trust M2 ID2](#OPTIGA™-Trust-M2-ID2)
-    - [OPTIGA™ Trust M2 ID2 与 ESP32-DevKitC V4](#OPTIGA™-Trust-M2-ID2-with-ESP32-DevKitC-V4)
+    - [缩略词](#缩略词)
+  - [OPTIGA™ Trust M2 ID2](#OPTIGA™ Trust M2 ID2)
+    - [OPTIGA™ Trust M2 ID2 与 ESP32-DevKitC V4](#OPTIGA™ Trust M2 ID2 和 ESP32-DevKitC V4)
     - [评估套件的组成部分](#Evaluation-Kit-Components)
   - [系统设置](#System-Setup)
     - [系统概况](#System-Overview)
@@ -236,8 +236,8 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
   
 
 1.将项目添加到Visual studio code中（例如，前往File->编辑文件夹到工作区->选择AliOS-Things库的顶层目录）。  
-8.	在visual studio code中打开新Terminal（前往 Terminal ->New Terminal）  
-9.	如需升级aos-cube，请在Visual Studio Code Terminal中执行以下步骤 
+2.在visual studio code中打开新Terminal（前往 Terminal ->New Terminal）  
+3.如需升级aos-cube，请在Visual Studio Code Terminal中执行以下步骤 
 
   ``` bash
     pip install --upgrade setuptools
