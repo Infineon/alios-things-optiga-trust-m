@@ -29,7 +29,7 @@
 
 本文档介绍了如何利用AliOS-Things软件包和OPTIGA™ Trust M2 ID2 ESP32-DevKitC V4来设置演示[mqttapp](https://code.aliyun.com/living_platform/ali-smartliving-device-alios-things/blob/1124151bc46d66e90ade507d8327e74c8cc94998/example/mqttapp/README.md)的环境。
 
-###	参考
+### 参考
 	
 | 定义 | 出处 |
 |---|---|
