@@ -12,7 +12,7 @@
     - [系统概况](#System-Overview)
     - [硬件设置](#Hardware-Setup)
     - [软件设置](#Software-Setup)
-  - [利用OPTIGA™ Trust M2 ID2构建AliOS-Things环境](#AliOS-Things-environment-setup-Using-OPTIGA™-Trust-M2-ID2)
+  - [利用OPTIGA™ Trust M2 ID2构建AliOS-Things环境](#利用OPTIGA™ Trust M2 ID2构建AliOS-Things环境)
     - [快速设置](#Quick-Setup)
   - [常见问题解答](#FAQs)
     - [如何在阿里云检查连接性](#How-to-check-connectivity-in-Ali-cloud)
