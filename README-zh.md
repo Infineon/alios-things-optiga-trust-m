@@ -211,7 +211,7 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
 
 ###	快速设置
 
-1.	按上方链接中的描述设置Visual Studio Code。
+1.	按如下链接中的描述设置Visual Studio Code ： https://github.com/alibaba/AliOS-Things/wiki/AliOS-Things-Studio  。
 2.	从2019年10月11日起，按照git repo版本执行步骤，直至(安装 AliOS Studio 插件) 。
 3.	在< workspace >创建文件夹（此处的"workspace"即克隆AliOS-Things库的文件夹）
 4.	打开命令提示符，然后前往目录< workspace >
