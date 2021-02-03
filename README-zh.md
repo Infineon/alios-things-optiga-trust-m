@@ -16,9 +16,7 @@
     - [快速设置](#Quick-Setup)
   - [常见问题解答](#FAQs)
     - [如何在阿里云检查连接性](#How-to-check-connectivity-in-Ali-cloud)
-    - [如何更新OPTIGA™的密钥](#How-to-update-key-in-OPTIGA™)
     - [如何在AliOS-Things源代码中更改加密配置](#How-to-change-the-crypto-configuration-in-AliOS-Things-source-code)
-    - [如何提取RSA密钥](#How-to-extract-RSA-key)
     - [如何创建和更新ID2设备节点](#How-to-create-and-update-new-ID2-device-node)
     - [如何对OPTIGA™芯片启用关断选项](#How-to-enable-power-off-option-to-OPTIGA™-chip)
     - [如何将OPTIGA™主机库移植到其他平台](#How-to-port-OPTIGA™-host-library-to-different-platform)
@@ -532,69 +530,6 @@ OPTIGA™ Trust M2 ID2 Shield2Go 采用了OPTIGA™ Trust M2 ID2安全芯片。�
 </div> 
 </details>
 
-###	如何更新OPTIGA™的密钥？
-
-1.	使用受保护的密钥更新功能来写入AES和RSA密钥
-2.	使用以下路径中的工具生成清单和片段：
-   AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\
-
-####	如何在OPTIGA™中更新AES密钥？
-
-1.	打开AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\payload\key\aes_key_128.txt 文件。
-2.	将阿里ID2密钥分发中心提供的16字节AES密钥写入aes_key_128.txt文件。
-3.	打开samples\gen_key_update_data_set.bat 文件，然后复制以下批处理命令。
-%PATH%\protected_update_data_set.exe payload_version=3 trust_anchor_oid=E0E3 target_oid=E200 sign_algo=RSA-SSA-PKCS1-V1_5-SHA-256 priv_key=..\samples\integrity\sample_rsa_1024_priv.pem payload_type=key key_algo=129 key_usage=02 key_data=..\samples\payload\key\aes_key_128.txt 
-4.	 从以下路径执行gen_key_update_data_set.bat from the below path
-AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples
-
-5.示例输出如下：
-
-<details>
-<summary>AES密钥的清单和片段数据的示例日志</summary>
-<div align="center">
-<img src="images/Figure-17-Example-log-of-manifest-and-fragment-data-for-AES-key.png">
-</div> 
-</details>
-
-6.	在AliOS-Things\3rdparty\experimental\optiga\example\optiga\usecases\example_ali_id2_key_update.c文件中进行以下更改
-    - 复制 "manifest_data[]" ，来替换 "manifest_aes_key[]"
-    - 复制 "fragment_01[]" ，来替换"aes_key_final_fragment_array[]”
-    - 复制12个字节的唯一设备ID（阿里ID2密钥分发中心提供）用它来替换"device_id[]”
-  
-7.	在 AliOS-Things\app\example\mqttapp\app_entry.c中的application_start()开头调用函数example_optiga_util_ali_id2_aes_key_update() 
-8.	返回根文件夹并使用以下命令构建源代码   
-  ``` bash
-    aos make
-  ```
-9.	刷新并执行应用程序
-
-#### 更新OPTIGA™中的RSA 1024密钥
-
-1.	打开 AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\payload\key\rsa_1024_test.pem 文件。
-2.	将阿里ID2密钥分发中心提供的密钥生成的RSA密钥复制到 rsa_1024_test.pem 文件(参阅[如何提取RSA密钥]部分(#How-to-extract-RSA-key))
-3.	打开samples\gen_key_update_data_set.bat 文件，并复制下方批处理命令。
-%PATH%\protected_update_data_set.exe payload_version=3 trust_anchor_oid=E0E3 target_oid=E0FC sign_algo=RSA-SSA-PKCS1-V1_5-SHA-256 priv_key=..\samples\integrity\sample_rsa_1024_priv.pem payload_type=key key_algo=65 key_usage=12 key_data=..\samples\payload\key\rsa_1024_test.pem 
-4.	 从以下路径执行gen_key_update_data_set.bat
-AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\
-5.	示例输出如下：
-
-<details>
-<summary>RSA密钥的清单和片段数据的示例日志</summary>
-<div align="center">
-<img src="images/Figure-18-Example-log-of-manifest-and-fragment-data-for-RSA-key.png">
-</div> 
-</details>
-
-6.	在AliOS-Things\3rdparty\experimental\optiga\example\optiga\usecases\example_ali_id2_rsa_key_update.c file文件中进行以下更改
-    - 复制"manifest_data[]"，来替换"manifest_rsa_key[]"
-    - 复制"fragment_01[]"，来替换"rsa_key_final_fragment_array[]”
-    - 复制12个字节的唯一设备ID（阿里ID2密钥分发中心提供），用来替换"rsa_device_id[]" 
-7.	在AliOS-Things\app\example\mqttapp\app_entry中的application start开头调用函数example_optiga_util_ali_id2_rsa_key_update()。
-8.	返回根文件夹并使用以下命令构建源代码
-  ``` bash
-    aos make
-  ```
-
 ###	如何在AliOS-Things源代码中更改加密配置
 
 本部分介绍了根据需要利用密钥类型所需的修改。
@@ -622,37 +557,6 @@ ifeq ($(CONFIG_LS_KM_SE), y)
 ifeq ($(CONFIG_LS_KM_SE), y)
   $(NAME)_DEFINES     += ID2_CRYPTO_TYPE_CONFIG=ID2_CRYPTO_TYPE_AES
 ```
-
-###	如何提取RSA密钥 
-
-1.	在ASN.1编辑器中打开Ali提供的RSA密钥数据，并按照以下描述复制突出显示的部分（突出显示的部分仅包含密钥部分）
-
-<details>
-<summary>仅提取密钥部分</summary>
-<div align="center">
-<img src="images/Figure-19-Extraction-of-only-key-part.png">
-</div> 
-</details>
-
-2.	前往Tools-> Data Converter，然后按照下方描述粘贴复制的十六进制数据
-
-<details>
-<summary>转换为HEX格式</summary>
-<div align="center">
-<img src="images/Figure-20-Converting-to-HEX-format.png">
-</div> 
-</details>
-
-3.	点击 "To PEM" 按钮，将十六进制的数据转换为.pem 格式。
-
-<details>
-<summary>将HEX转换为PEM格式</summary>
-<div align="center">
-<img src="images/Figure-21-Converting-HEX-to-PEM-format.png">
-</div> 
-</details>
-
-4.	将文件保存在 AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\payload\key\rsa_1024_key.pem
 
 ###	如何创建和更新新的ID2设备节点
 
