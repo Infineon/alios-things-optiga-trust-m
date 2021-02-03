@@ -16,9 +16,7 @@ EN | [中文](./README-zh.md)
     - [Quick Setup](#Quick-Setup)
   - [FAQs](#FAQs)
     - [How to check connectivity in Ali cloud](#How-to-check-connectivity-in-Ali-cloud)
-    - [How to update key in OPTIGA™](#How-to-update-key-in-OPTIGA™)
     - [How to change the crypto configuration in AliOS-Things source code](#How-to-change-the-crypto-configuration-in-AliOS-Things-source-code)
-    - [How to extract RSA key](#How-to-extract-RSA-key)
     - [How to create and update new ID2 device node](#How-to-create-and-update-new-ID2-device-node)
     - [How to enable power off option to OPTIGA™ chip](#How-to-enable-power-off-option-to-OPTIGA™-chip)
     - [How to port OPTIGA™ host library to different platform](#How-to-port-OPTIGA™-host-library-to-different-platform)
@@ -507,69 +505,6 @@ Repeat from step 1
 </div> 
 </details>
 
-###	How to update key in OPTIGA™
-
-1.	Use protected key update feature to write AES and RSA key
-2.	Use the tool in the below path to generate manifest and fragments
-   AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\
-
-####	Update AES key in OPTIGA™
-
-1.	Open AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\payload\key\aes_key_128.txt file.
-2.	Write 16 bytes AES key provided by ali ID2 key distribution center in aes_key_128.txt file.
-3.	Open samples\gen_key_update_data_set.bat file and copy the below batch command.
-%PATH%\protected_update_data_set.exe payload_version=3 trust_anchor_oid=E0E3 target_oid=E200 sign_algo=RSA-SSA-PKCS1-V1_5-SHA-256 priv_key=..\samples\integrity\sample_rsa_1024_priv.pem payload_type=key key_algo=129 key_usage=02 key_data=..\samples\payload\key\aes_key_128.txt 
-4.	 Execute the gen_key_update_data_set.bat from the below path
-AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples
-
-5. Example output is shown as below
-
-<details>
-<summary>Example log of manifest and fragment data for AES key</summary>
-<div align="center">
-<img src="images/Figure-17-Example-log-of-manifest-and-fragment-data-for-AES-key.png">
-</div> 
-</details>
-
-6.	Make the following changes in AliOS-Things\3rdparty\experimental\optiga\example\optiga\usecases\example_ali_id2_key_update.c file
-    - Copy "manifest_data[]" and replace it in "manifest_aes_key[]"
-    - Copy "fragment_01[]" and replace it in "aes_key_final_fragment_array[]"
-    - Copy 12 bytes unique device ID(provided by ali ID2 distribution center) and replace it in "device_id[]"
-  
-7.	Invoke function example_optiga_util_ali_id2_aes_key_update() in the beginning of application_start() present in AliOS-Things\app\example\mqttapp\app_entry.c
-8.	Go back to root folder and build source code using below command   
-  ``` bash
-    aos make
-  ```
-9.	Flash and execute application
-
-#### Update RSA 1024 key in OPTIGA™
-
-1.	Open AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\payload\key\rsa_1024_test.pem file.
-2.	Copy the RSA key generated from the key provided by Ali ID2 key distribution center in rsa_1024_test.pem file (Refer section [How to extract RSA key](#How-to-extract-RSA-key))
-3.	Open samples\gen_key_update_data_set.bat file and copy the below batch command
-%PATH%\protected_update_data_set.exe payload_version=3 trust_anchor_oid=E0E3 target_oid=E0FC sign_algo=RSA-SSA-PKCS1-V1_5-SHA-256 priv_key=..\samples\integrity\sample_rsa_1024_priv.pem payload_type=key key_algo=65 key_usage=12 key_data=..\samples\payload\key\rsa_1024_test.pem 
-4.	 Execute the gen_key_update_data_set.bat from the below path
-AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\
-5.	Example output is shown as below
-
-<details>
-<summary>Example log of manifest and fragment data for RSA key</summary>
-<div align="center">
-<img src="images/Figure-18-Example-log-of-manifest-and-fragment-data-for-RSA-key.png">
-</div> 
-</details>
-
-6.	Make the following changes in AliOS-Things\3rdparty\experimental\optiga\example\optiga\usecases\example_ali_id2_rsa_key_update.c file
-    - Copy "manifest_data[]" and replace it in "manifest_rsa_key[]"
-    - Copy "fragment_01[]" and replace it in "rsa_key_final_fragment_array[]"
-    - Copy 12 bytes unique device ID(provided by ali ID2 distribution center) and replace it in "rsa_device_id[]" 
-7.	Invoke function example_optiga_util_ali_id2_rsa_key_update() in the beginning of application start() present in AliOS-Things\app\example\mqttapp\app_entry.
-8.	Go back to root folder and build source code using below command
-  ``` bash
-    aos make
-  ```
-
 ###	How to change the crypto configuration in AliOS-Things source code
 
 This section describes the modification require to use key type as per needs.
@@ -597,37 +532,6 @@ ifeq ($(CONFIG_LS_KM_SE), y)
 ifeq ($(CONFIG_LS_KM_SE), y)
   $(NAME)_DEFINES     += ID2_CRYPTO_TYPE_CONFIG=ID2_CRYPTO_TYPE_AES
 ```
-
-###	How to extract RSA key 
-
-1.	Open the RSA key data provided by Ali in ASN.1 editor and copy the highlighted section as shown below (from the highlighted section its only contain the key part)
-
-<details>
-<summary>Extraction of only key part</summary>
-<div align="center">
-<img src="images/Figure-19-Extraction-of-only-key-part.png">
-</div> 
-</details>
-
-2.	Go to Tools-> Data Converter and paste the copied hexadecimal data as shown below
-
-<details>
-<summary>Converting to HEX format</summary>
-<div align="center">
-<img src="images/Figure-20-Converting-to-HEX-format.png">
-</div> 
-</details>
-
-3.	Click button "To PEM" to convert hexadecimal data to .pem format
-
-<details>
-<summary>Converting HEX to PEM format</summary>
-<div align="center">
-<img src="images/Figure-21-Converting-HEX-to-PEM-format.png">
-</div> 
-</details>
-
-4.	Save the file in AliOS-Things\3rdparty\experimental\optiga\example\tools\protected_update_data_set\samples\payload\key\rsa_1024_key.pem
 
 ###	How to create and update new ID2 device node
 
